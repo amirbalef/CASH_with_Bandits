@@ -170,10 +170,11 @@ HPO_Runs/run_scripts
 Bandits/plotting_scripts/extra_plots/toy_examples/xp/*
 Bandits/plotting_scripts/extra_plots/toy_examples/figures/*
 
-!Bandits/datasets/notebooks
-!Bandits/datasets/
-Bandits/datasets/*
 
-!Bandits/results/
+Bandits/datasets/*
+!Bandits/datasets/notebooks
+!Bandits/datasets
+
 Bandits/results/*
+!Bandits/results
 
