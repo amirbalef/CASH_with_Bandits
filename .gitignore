@@ -162,8 +162,9 @@ cython_debug/
 .vscode
 .vscode/*
 
-!HPO_Runs/results
+
 HPO_Runs/results/**
+!HPO_Runs/results
 
 HPO_Runs/run_scripts
 
