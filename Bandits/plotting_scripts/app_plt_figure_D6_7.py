@@ -60,7 +60,7 @@ if not os.path.exists(path):
 #shift_metric = "median"
 shift_metric = "mean"
 selected_arm = 0
-number_of_stationary_pieces = 5
+number_of_stationary_pieces = 20
 
 shifts = []
 changes = []
