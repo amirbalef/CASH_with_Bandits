@@ -27,20 +27,17 @@ def get_plot(order, dataset_name):
 
     policy_algorithms = {}
     policy_algorithms["MaxUCB"] = 1
-    policy_algorithms["Q_BayesUCB"] = 1
-    policy_algorithms["ER_UCB_S"] = 1
-    policy_algorithms["Rising_Bandit"] = 1
-    # policy_algorithms["QoMax_ETC"] = 1
+    policy_algorithms["MaxSearch_Gaussian"] = 1
+    policy_algorithms["MaxSearch_SubGaussian"] = 1
+    policy_algorithms["QoMax_ETC"] = 1
     policy_algorithms["QoMax_SDA"] = 1
     # policy_algorithms["ER_UCB_N"] = 1
     policy_algorithms["Max_Median"] = 1
     # policy_algorithms["Exp3_OG"] = 1
     # policy_algorithms["TS_Poisson"] = 1
     # policy_algorithms["TS_Gaussian"] = 1
-    policy_algorithms["UCB"] = 1
-    # policy_algorithms["MaxSearch_Gaussian"] = 1
-    # policy_algorithms["MaxSearch_SubGaussian"] = 1
-    # policy_algorithms["Threshold_Ascent"] = 1
+    #policy_algorithms["UCB"] = 1
+    policy_algorithms["Threshold_Ascent"] = 1
     policy_algorithms["Random"] = 1
     if(len(combined_search_algorithms)>0):
         combined_search_algorithms.append(combined_search_algorithms.pop(0))
@@ -78,7 +75,7 @@ def get_plot(order, dataset_name):
         linecycler = cycler(linestyle=lines)
         all_cyclers = all_cyclers.concat(colorcycler * linecycler)
 
-    path = result_directory + "/plots_for_paper/app/fig_norm_loss/"
+    path = result_directory + "/plots_for_paper/app/fig_norm_loss/part_1"
     if not os.path.exists(path):
         os.makedirs(path)
 

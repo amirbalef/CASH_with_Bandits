@@ -169,3 +169,5 @@ ani = FuncAnimation(
 ani.save("HPO_combined_search.gif", dpi=300, writer='imagemagick')
 # Show the plot
 plt.close()
+
+# gifsicle -O3 --colors 16 --lossy=30 -o HPO_combined_search_c.gif HPO_combined_search.gif

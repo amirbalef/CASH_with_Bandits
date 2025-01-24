@@ -4,15 +4,23 @@ printing_name_dict["YaHPOGym"] = "YaHPOGym[SMAC]" #  \\citep{pfisterer-automl22a
 printing_name_dict["Reshuffling"] = "Reshuffling[HEBO]"
 printing_name_dict["TabRepo"] = "TabRepo[RS]"
 printing_name_dict["TabRepoRaw"] = "TabRepoRaw[SMAC]"
+printing_name_dict["SubSupernet"] = "Supernet[RS]"
+
 
 printing_name_dict["SMAC_NoInit"] = "SMAC-no-init"
 printing_name_dict["SMAC"]= "SMAC" #  \\citep{lindauer-jmlr22a}"
 printing_name_dict["RandomSearch"] = "Random Search"
+printing_name_dict["RandomSearch_FSS"] = "Random Search\\\\(Full Search Space)"
+
 
 printing_name_dict["UCB"]= "UCB"
 printing_name_dict["QuantileUCB"]= "Quantile UCB"
 printing_name_dict["Exp3_TB"]= "Exp3"
 printing_name_dict["Exp3_OG"]= "Exp3"
+
+printing_name_dict["Exp3"] = "Exp3"
+printing_name_dict["ThompsonSampling"] = "Thompson Sampling"
+
 
 printing_name_dict["ER_UCB_N"]= "ER-UCB-N" #   \\citep{hu2021cascaded}"
 printing_name_dict["ER_UCB_S"]= "ER-UCB-S" #  \\citep{hu2021cascaded}"
@@ -26,7 +34,14 @@ printing_name_dict["Random"]= "Random Policy"
 printing_name_dict["Q_BayesUCB"]= "Quantile Bayes UCB"
 printing_name_dict["Successive_Halving"]= "Successive Halving"
 
+printing_name_dict["R_SR"] = "R-SR"
+printing_name_dict["R_UCBE"] = "R-UCBE"
+
+
+
 printing_name_dict["MaxUCB"] = "\\textbf{MaxUCB }"
+
+printing_name_dict["MaxUCB_adaptive_alpha"] = "MaxUCB(adaptive $\\alpha$)"
 
 printing_name_dict["Oracle"] = "Oracle"
 printing_name_dict["Oracle_Arm"] = "Oracle Arm"

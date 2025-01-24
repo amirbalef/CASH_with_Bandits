@@ -37,6 +37,7 @@ def get_plot(order,  dataset_name):
     # policy_algorithms["MaxSearch_Gaussian"] = 1
     # policy_algorithms["MaxSearch_SubGaussian"] = 1
     #policy_algorithms["Threshold_Ascent"] = 1
+    #policy_algorithms["Successive_Halving"] = 1
     #policy_algorithms["Random"] = 1
     for algorithm in reversed(combined_search_algorithms):
         if(algorithm !="SMAC_NoInit"):

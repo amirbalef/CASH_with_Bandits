@@ -63,7 +63,7 @@ def plot_averaged_on_datasets(data):
     ax.set_prop_cycle(data["cyclers"])
 
     for i, item in enumerate(data["all_result"].keys()):
-        zorder = len(data["all_result"].keys()) - i
+        zorder = 99 if i ==0 else i
         ax.plot(
             index,
             mean[i],

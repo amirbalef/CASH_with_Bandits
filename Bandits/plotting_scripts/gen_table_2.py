@@ -22,6 +22,7 @@ competitors = [
     "QoMax_SDA",
     "Max_Median",
     "UCB",
+    #"Successive_Halving",
 ]  # ,, "QoMax_SDA",  "Max_Median", "UCB", "Oracle_Arm"]
 
 

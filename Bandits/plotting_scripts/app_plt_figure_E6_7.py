@@ -139,6 +139,8 @@ shifts.append(shifts_list[indexes])
 
 df_rank = df.T
 df_rank = df_rank.reindex(columns=indexes)
+for item in indexes:
+    print(instances[int(item)])
 df_ranks.append(df_rank)
 result = pd.concat(df_ranks, axis=1)
 

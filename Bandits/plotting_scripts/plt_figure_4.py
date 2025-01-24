@@ -8,7 +8,7 @@ from matplotlib.ticker import FormatStrFormatter
 
 ### run for each datasets
 dataset_name = "TabRepoRaw"
-dataset_name = "YaHPOGym"
+#dataset_name = "YaHPOGym"
 
 dataset = pd.read_csv("../datasets/" + dataset_name + ".csv")
 
@@ -36,8 +36,8 @@ for intance_num in range(len(instances)):
     scale_factor = []
     for trail in range(number_of_trails):
         data = raw_data[intance_num][:, trail]
-        top_value = np.min(raw_data[intance_num][:, :, :])
-        baseline_value = np.max(raw_data[intance_num][:, :, :])
+        top_value = np.min(raw_data[intance_num][:, trail, :])
+        baseline_value = np.max(raw_data[intance_num][:, trail, :])
         denominator = max(1e-5, baseline_value - top_value)
         data = (data - top_value) / denominator
         data = data[:, :time]
@@ -59,18 +59,21 @@ plt.rcParams.update({"font.size": 20})
 high_epsilon = 1.0
 low_epsilon = 0.00
 
-epsilon = np.linspace(high_epsilon, low_epsilon, 40)
+epsilon = np.linspace(low_epsilon, high_epsilon, 1000)
 
 fig, axs = plt.subplots(1, 3, sharey=True)  # , sharey=True
 plt.subplots_adjust(left=0.0, right=1.0, top=0.9, bottom=0.3)
 arm_listt = [0, number_of_arms // 2, number_of_arms - 1]
-for i in range(3):
+for i in range(len(arm_listt)):
     L = []
     for d in range(len(instances)):
+        data = 1 - dataset[d, :, arm_listt[i], :].flatten()
+        # high_epsilon = 1 - np.quantile(data, q=0.99)
+        # low_epsilon = 1 - np.quantile(data, q=0.01) 
+        # epsilon = np.linspace(high_epsilon, low_epsilon, 100)
         res = []
         for eps in epsilon:
-            data = 1 - dataset[d, :, arm_listt[i], :].flatten()
-            if eps >= np.quantile(data, q=0.95) or eps <= np.quantile(data, q=0.05):
+            if   eps <= 1 - np.quantile(data, q=0.99) or eps >= 1 -np.quantile(data, q=0.01):
                 res.append(np.nan)
             else:
                 res.append(np.mean(data >= (1 - eps)) / eps)
@@ -91,19 +94,57 @@ for i in range(3):
             axs[i].plot(
                 epsilon,
                 L[d],
-                linewidth=3,
+                linewidth=1.5,
                 color=desaturate("tab:orange", 0.75),
-                alpha=0.4,
+                alpha=0.3,
                 label=label,
+            )
+            label = "$L_i=\\min(\\frac{G_i(b- \epsilon)}{\epsilon})$"
+            axs[i].scatter(
+                epsilon[np.nanargmin(L[d])],
+                np.nanmin(L[d]),
+                color=desaturate("tab:red", 0.75),
+                alpha=0.3,
+                s=3,
+                label=label,
+                zorder = 99
+            )
+            label = "$U_i=\\max(\\frac{G_i(b- \epsilon)}{\epsilon})$"
+            axs[i].scatter(
+                epsilon[np.nanargmax(L[d])],
+                np.nanmax(L[d]),
+                color=desaturate("tab:blue", 0.75),
+                alpha=0.3,
+                s=3,
+                label=label,
+                zorder=99,
             )
         else:
             axs[i].plot(
                 epsilon,
                 L[d],
-                linewidth=3,
+                linewidth=1.5,
                 color=desaturate("tab:orange", 0.75),
-                alpha=0.4,
+                alpha=0.3,
             )
+
+            axs[i].scatter(
+                epsilon[np.nanargmin(L[d])],
+                np.nanmin(L[d]),
+                color=desaturate("tab:red", 0.75),
+                alpha=0.3,
+                s=3,
+                zorder=99,
+            )
+            axs[i].scatter(
+                epsilon[np.nanargmax(L[d])],
+                np.nanmax(L[d]),
+                color=desaturate("tab:blue", 0.75),
+                alpha=0.3,
+                s=3,
+                zorder=99,
+            )
+
     # axs[i].fill_between(
     #     epsilon,
     #     np.nanquantile(L, q=0.05, axis=0),
@@ -155,19 +196,30 @@ for i in range(3):
     if dataset_name != "YaHPOGym" :
         axs[i].title.set_text(title)
 
+    if dataset_name == "TabRepoRaw":
+        axs[i].set_yscale("log")
+        axs[i].set_ylim(top=200, bottom=0.4)
+
     if dataset_name == "YaHPOGym" :
-        axs[i].set_ylim(top=5)
+        axs[i].set_yscale("log")
+        axs[i].set_ylim(top=500, bottom=0.1)
+
 
 if dataset_name == "YaHPOGym" :
     handles, labels = axs[0].get_legend_handles_labels()
-    fig.legend(
+    order = [0, 3, 1, 4, 2]
+    labels, handles =[labels[idx] for idx in order], [handles[idx] for idx in order]
+    leg = fig.legend(
         handles,
         labels,
-        bbox_to_anchor=(-0.06, -0.02, 1, 1),
+        bbox_to_anchor=(-0.06, -0.06, 1, 1),
         loc="lower center",
         ncol=3,
-        prop={"size": 19},
+        prop={"size": 15},
     )
+    for handle in leg.legend_handles:
+        handle._sizes = [30]
+        handle.set_alpha(1)
 
 fig.add_subplot(111, frameon=False)
 plt.tick_params(

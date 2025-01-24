@@ -141,9 +141,9 @@ for i, dataset_name in enumerate(dataset_names):
     # ax.set_title("Ranks of methods per dataset", fontdict={"size": title_size})
 
 
-# plt.savefig(
-#     path + "ranks_per_dataset.pdf", dpi=600, bbox_inches="tight"
-# )
+plt.savefig(
+    path + "ranks_per_dataset.pdf", dpi=600, bbox_inches="tight"
+)
 
 # plt.rcParams.update({'font.size': 22})
 # fig, ax = plt.subplots(figsize=(8, 6))

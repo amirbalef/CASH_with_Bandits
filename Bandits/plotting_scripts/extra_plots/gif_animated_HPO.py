@@ -58,6 +58,9 @@ fig, ax = plt.subplots(figsize=(9, 8))
 
 
 def animate(i):
+    if i > horizon_time // number_of_arms:
+        i = horizon_time // number_of_arms
+
     ax.clear()
 
     colors = ["black"]
@@ -170,13 +173,22 @@ def animate(i):
 
 
 fig.subplots_adjust(left=0.15, bottom=0.12, right=0.6, top=0.95, wspace=None, hspace=None)
+delay = 30
 ani = FuncAnimation(
-    fig, animate, interval=1000, blit=True, repeat=False, repeat_delay=10000,  frames=(horizon_time//number_of_arms)
+    fig,
+    animate,
+    interval=700,
+    blit=True,
+    repeat=False,
+    repeat_delay=10000,
+    frames=(horizon_time // number_of_arms + delay),
 )
 
 ani.save("HPO.gif", dpi=300, writer='imagemagick')
 # Show the plot
 plt.close()
+
+# run command  "gifsicle -O3 --colors 256 --lossy=30 -o HPO_c.gif HPO.gif"
 
 
 # fig, ax = plt.subplots(figsize=(7, 8))
@@ -243,3 +255,4 @@ plt.close()
 # fig.savefig(
 #     result_directory + "extra_plots/performance.pdf", dpi=600, bbox_inches="tight"
 # )
+

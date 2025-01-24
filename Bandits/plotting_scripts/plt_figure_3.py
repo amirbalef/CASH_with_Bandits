@@ -141,6 +141,10 @@ for arm in range(0, number_of_arms):
         label = "Worst arm"
     if arm == 0:
         label = "Optimal arm"
+    if(dataset_name == "TabRepoRaw"):
+        if arm == number_of_arms - 2:
+            ax.text(2.05, 0.38, " (only " + dataset_name + ")", transform=ax.transData, fontsize = 20, zorder =99)
+            #label = Ordinal_numbers[arm] + " arm (only " + dataset_name +")"
 
     for n in range(number_of_stationary_pieces):
         list_of_cdfs = list_of_cdfs_per_seqments[n]
@@ -166,7 +170,7 @@ for arm in range(0, number_of_arms):
 
 # axins.set_xlim(0.95, 1.05)
 plt.ylabel("empirical CDF")
-plt.xlabel("normalized performance")
+plt.xlabel("reward")
 
 # plt.title(algorithms_data.algoirthm_names_dict[dataset_name])
 # plt.legend()
@@ -296,7 +300,7 @@ if 0:  # dataset_name == "TabRepo_gen":
 
 # axins.set_xlim(0.95, 1.05)
 plt.ylabel("empirical CDF")
-plt.xlabel("normalized performance")
+plt.xlabel("reward")
 # plt.title(algorithms_data.algoirthm_names_dict[dataset_name] )
 # plt.legend()
 

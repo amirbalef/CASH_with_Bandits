@@ -17,6 +17,10 @@ from policies.Rising_Bandit import Rising_Bandit
 from policies.Successive_Halving import Successive_Halving
 from policies.ThompsonSampling import ThompsonSampling
 from policies.Threshold_Ascent import Threshold_Ascent
+from policies.R_UCBE import R_UCBE
+from policies.R_SR import R_SR
+from policies.MaxUCB_adaptive_alpha import MaxUCB_adaptive_alpha
+
 from policies.MaxSearch import MaxSearch_Gaussian, MaxSearch_SubGaussian
 from policies.Random import Random
 from plotting_scripts import exp_utils
@@ -29,8 +33,9 @@ if(multiprocess == "joblib"):
 
 dataset_name = "TabRepo"
 #dataset_name = "TabRepoRaw"
-dataset_name = "YaHPOGym"
+#dataset_name = "YaHPOGym"
 #dataset_name = "Reshuffling"
+#dataset_name = "SubSupernet"
 
 dataset = pd.read_csv("./datasets/" + dataset_name + ".csv")
 
@@ -53,8 +58,12 @@ policy_algorithms["Random"] = Random
 policy_algorithms["QuantileUCB"] = QuantileUCB
 policy_algorithms["Q_BayesUCB"] = Q_BayesUCB
 policy_algorithms["Successive_Halving"] = Successive_Halving
+policy_algorithms["R_UCBE"] = R_UCBE
+policy_algorithms["R_SR"] = R_SR
 policy_algorithms["UCB"] = UCB
 policy_algorithms["MaxUCB"] = MaxUCB
+policy_algorithms["MaxUCB_adaptive_alpha"] = MaxUCB_adaptive_alpha
+
 policy_algorithms["Rising_Bandit"] = Rising_Bandit
 policy_algorithms["QoMax_ETC"] = QoMax_ETC
 policy_algorithms["QoMax_SDA"] = QoMax_SDA
@@ -67,16 +76,16 @@ policy_algorithms["MaxSearch_Gaussian"] = MaxSearch_Gaussian
 policy_algorithms["MaxSearch_SubGaussian"] = MaxSearch_SubGaussian
 policy_algorithms["ThompsonSampling"] = ThompsonSampling
 
-alphas = np.arange(0.0, 3, 0.1)
-alphas = np.round(alphas, 2)
-for item in alphas:
-    policy_algorithms["MaxUCB_" + str(item)] = partial(MaxUCB, alpha=item)
+# alphas = np.arange(0.0, 3, 0.1)
+# alphas = np.round(alphas, 2)
+# for item in alphas:
+#     policy_algorithms["MaxUCB_" + str(item)] = partial(MaxUCB, alpha=item)
 
-bruning_steps = np.arange(1, 9, 1)
-for item in bruning_steps:
-    policy_algorithms["MaxUCB_burn-in_" + str(item)] = partial(
-        MaxUCB, burn_in_steps=item
-    )
+# bruning_steps = np.arange(1, 9, 1)
+# for item in bruning_steps:
+#     policy_algorithms["MaxUCB_burn-in_" + str(item)] = partial(
+#         MaxUCB, burn_in_steps=item
+#     )
 
 policy_algorithms["Oracle_Arm"] =  None
 
