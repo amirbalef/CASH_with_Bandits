@@ -18,10 +18,6 @@ This approach, while comprehensive, can suffer from inefficiencies due to the hi
 *HPO results for combined search:*  
 ![Combined Search HPO output](assets/HPO_combined_search_c.gif)  
 
-
-Alternatively is Running an HPO per ML model in this case we have smaller search space for each HPO. however excessive computation budget . to adress this we use multi-armed bandit for budget allocation.
-![Decomposed CASH Overview](assets/decomposed_cash.png)
-![HPO output per ML model](assets/HPO_c.gif)
 ---
 
 ### 2. **Decomposed Search with Bandits**  
