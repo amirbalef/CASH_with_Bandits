@@ -37,38 +37,13 @@ By using MaxUCB, we strike a balance between model exploration and hyperparamete
 ## **Project Structure**  
 The repository is organized as follows:
 
+```
+project
 ├── HPO_Runs/ # Scripts and configurations for generating HPO trajectories 
 ├── Bandits/ # Code for applying bandit algorithms on the generated HPO trajectories 
 ├── assets/ # Visuals and diagrams for illustrating approaches 
 ├── README.md # Project overview and documentation
-
-
-## Dependency
-
-Using a Conda environment is recommended.
-
-You may need to install and set up the TabRepo and YAHPO gym packages.
-
-TabRepo: https://github.com/autogluon/tabrepo
-
-YAHPO gym: https://github.com/slds-lmu/yahpo_gym
-
-
-To install the repository, ensure you are using Python 3.9-3.11. Other Python versions may not be supported. Then, run the following commands:
-
-```bash
-pip install -r requirements.txt
 ```
-
-Only Linux support has been tested.
-
-## Running expiriments
-To run experiments, execute the following command:
-
-```bash
-python main.py 
-```
-
 
 ## **Contributions**  
 We welcome feedback and contributions! Please submit an issue or a pull request to help improve this repository.  Feel free to adapt and extend this codebase as needed for your own experiments and research.
