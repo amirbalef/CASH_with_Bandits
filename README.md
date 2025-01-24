@@ -38,7 +38,7 @@ By using MaxUCB, we strike a balance between model exploration and hyperparamete
 The repository is organized as follows:
 
 ```
-project
+CASH_with_Bandits
 ├── HPO_Runs/ # Scripts and configurations for generating HPO trajectories 
 ├── Bandits/ # Code for applying bandit algorithms on the generated HPO trajectories 
 ├── assets/ # Visuals and diagrams for illustrating approaches 
