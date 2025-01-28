@@ -13,9 +13,11 @@ python main_reproducing_results.py
 
 ## Plttoing results
 After running the experiments:
+
 1.Navigate to the plotting_scripts directory:
 
 ```bash
-python plotting_scripts 
+cd plotting_scripts 
 ```
+
 2.Run the relevant scripts to generate plots for analysis.
