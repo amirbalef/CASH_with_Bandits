@@ -34,8 +34,8 @@ for intance_num in range(len(instances)):
     scale_factor = []
     for trail in range(number_of_trails):
         data = raw_data[intance_num][:, trail]
-        top_value = np.min(raw_data[intance_num][:, :, :])
-        baseline_value = np.max(raw_data[intance_num][:, :, :])
+        top_value = np.min(raw_data[intance_num][:, trail, :])
+        baseline_value = np.max(raw_data[intance_num][:, trail, :])
         denominator = max(1e-5, baseline_value - top_value)
         data = (data - top_value) / denominator
         data = data[:, :time]
@@ -143,7 +143,7 @@ for arm in range(0, number_of_arms):
         label = "Optimal arm"
     if(dataset_name == "TabRepoRaw"):
         if arm == number_of_arms - 2:
-            ax.text(2.05, 0.38, " (only " + dataset_name + ")", transform=ax.transData, fontsize = 20, zorder =99)
+            ax.text(2.45, 0.38, " (only " + dataset_name + ")", transform=ax.transData, fontsize = 20, zorder =99)
             #label = Ordinal_numbers[arm] + " arm (only " + dataset_name +")"
 
     for n in range(number_of_stationary_pieces):
@@ -151,7 +151,7 @@ for arm in range(0, number_of_arms):
         data = np.mean(list_of_cdfs, axis=0).flatten()
         ax.plot(
             np.sort(data),
-            np.linspace(0, 1, len(data), endpoint=False),
+            1 - np.linspace(0, 1, len(data), endpoint=False),
             linewidth=1,
             color=desaturate(my_pal[arm], 0.75),
             alpha=0.5,
@@ -161,7 +161,7 @@ for arm in range(0, number_of_arms):
 
     ax.plot(
         np.sort(data),
-        np.linspace(0, 1, len(data), endpoint=False),
+        1 - np.linspace(0, 1, len(data), endpoint=False),
         label=label,
         linewidth=3,
         linestyle="--",
@@ -169,8 +169,8 @@ for arm in range(0, number_of_arms):
     )
 
 # axins.set_xlim(0.95, 1.05)
-plt.ylabel("empirical CDF")
-plt.xlabel("reward")
+plt.ylabel("Survival function")
+plt.xlabel("Reward")
 
 # plt.title(algorithms_data.algoirthm_names_dict[dataset_name])
 # plt.legend()
@@ -213,14 +213,14 @@ for i, intance in enumerate(instances):
     # plot
     ax.plot(
         np.sort(df.Score),
-        np.linspace(0, 1, len(df.Score), endpoint=False),
+        1 - np.linspace(0, 1, len(df.Score), endpoint=False),
         linewidth=2,
         color=desaturate("tab:blue", 0.75),
         alpha=0.1,
     )
     ax.plot(
         np.sort(df.Suboptimal),
-        np.linspace(0, 1, len(df.Suboptimal), endpoint=False),
+        1 - np.linspace(0, 1, len(df.Suboptimal), endpoint=False),
         linewidth=2,
         color=desaturate("tab:orange", 0.75),
         alpha=0.1,
@@ -239,14 +239,14 @@ for i, intance in enumerate(instances):
 # plot
 ax.plot(
     np.sort(np.mean(list_of_cdfs, axis=0)),
-    np.linspace(0, 1, len(list_of_cdfs[0]), endpoint=False),
+    1 - np.linspace(0, 1, len(list_of_cdfs[0]), endpoint=False),
     label="Optimal arm",
     color=desaturate("tab:blue", 0.75),
     linewidth=3,
 )
 ax.plot(
     np.sort(np.mean(list_of_cdfs_arm, axis=0)),
-    np.linspace(0, 1, len(list_of_cdfs[0]), endpoint=False),
+    1 -  np.linspace(0, 1, len(list_of_cdfs[0]), endpoint=False),
     label="Worst arm",
     color=desaturate("tab:orange", 0.75),
     linewidth=3,
@@ -265,13 +265,13 @@ if 0:  # dataset_name == "TabRepo_gen":
 
     axins.plot(
         np.sort(df.Score),
-        np.linspace(0, 1, len(df.Score), endpoint=False),
+        1 - np.linspace(0, 1, len(df.Score), endpoint=False),
         label="Optimal arm",
         linewidth=4,
     )
     axins.plot(
         np.sort(df.Suboptimal),
-        np.linspace(0, 1, len(df.Suboptimal), endpoint=False),
+        1 - np.linspace(0, 1, len(df.Suboptimal), endpoint=False),
         label="Worst arm",
         linewidth=4,
     )
@@ -299,8 +299,8 @@ if 0:  # dataset_name == "TabRepo_gen":
 
 
 # axins.set_xlim(0.95, 1.05)
-plt.ylabel("empirical CDF")
-plt.xlabel("reward")
+plt.ylabel("Survival function")
+plt.xlabel("Reward")
 # plt.title(algorithms_data.algoirthm_names_dict[dataset_name] )
 # plt.legend()
 

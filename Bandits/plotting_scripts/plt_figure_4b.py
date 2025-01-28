@@ -53,8 +53,15 @@ dataset = np.asarray(data_list_s)
 # Ploting L and U values (in the paper])
 # ################################################################
 
+values_L = []
+values_U = []
+
+W_values_L = []
+W_values_U = []
+
+
 plt.rcParams["figure.figsize"] = 8, 4.5
-plt.rcParams.update({"font.size": 20})
+plt.rcParams.update({"font.size": 24})
 
 high_epsilon = 1.0
 low_epsilon = 0.00
@@ -76,7 +83,7 @@ for i in range(len(arm_listt)):
             if   eps <= 1 - np.quantile(data, q=0.99) or eps >= 1 -np.quantile(data, q=0.01):
                 res.append(np.nan)
             else:
-                res.append(np.mean(data >= (1 - eps)) / eps)
+                res.append(np.mean(data >= (np.quantile(data, q=0.99) - eps)) / eps)
         L.append(res)
     L = np.asarray(L)
     # axs[i].plot(
@@ -144,6 +151,13 @@ for i in range(len(arm_listt)):
                 s=3,
                 zorder=99,
             )
+        if i==0:
+            values_L.append(np.nanmin(L[d]))
+            values_U.append(np.nanmax(L[d]))
+
+        if i == len(arm_listt) - 1:
+            W_values_L.append(np.nanmin(L[d]))
+            W_values_U.append(np.nanmax(L[d]))
 
     # axs[i].fill_between(
     #     epsilon,
@@ -230,3 +244,52 @@ plt.ylabel(algorithms_data.printing_name_dict[dataset_name], position=(1, 25))
 plt.xlabel("$\epsilon$", position=(1, 25))
 # fig.suptitle(algorithms_data.algoirthm_names_dict[dataset_name])
 plt.savefig(path + dataset_name + "_L_U_S.pdf", dpi=600, bbox_inches="tight")
+
+
+print(W_values_U)
+
+# Create a figure with two subplots
+fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
+plt.subplots_adjust(wspace=0)
+
+bins = np.logspace(-2, 2, num=20)  # Custom bins for list1
+# Plot histogram for list1
+axes[0].hist(values_L, bins=bins, color="tab:blue", alpha=0.3, edgecolor="tab:blue", label = "Optimal arm")
+axes[0].hist(
+    W_values_L,
+    bins=bins,
+    color="tab:orange",
+    alpha=0.3,
+    edgecolor="tab:orange",
+    label="Worst arm",
+)
+#axes[0].set_title("Histogram of L")
+axes[0].set_xlabel("Values for L")
+axes[0].set_ylabel("Frequency")
+# axes[0].set_xticks(bins)  # Set ticks to bin edges
+# axes[0].set_xticklabels(bins)  # Use bin edges as tick labels
+axes[0].set_xscale("log")
+axes[0].legend(loc="upper left", fontsize=16)
+
+
+bins = np.logspace(-2, 3, num=20)  # Custom bins for list1
+
+# Plot histogram for list2
+axes[1].hist(
+    values_U,
+    bins=bins,
+    color="tab:blue",
+    alpha=0.3,
+    edgecolor="tab:blue",
+    label="Optimal arm",
+)
+axes[1].hist(W_values_U, bins=bins, color="tab:orange", alpha=0.3, edgecolor="tab:orange", label="Worst arm",
+)
+#axes[1].set_title("Histogram of U")
+axes[1].set_xlabel("Values for U")
+# axes[1].set_xticks(bins)  # Set ticks to bin edges
+# axes[1].set_xticklabels(bins)  # Use bin edges as tick labels
+axes[1].set_xscale("log")
+axes[1].legend(loc="upper left", fontsize=16)
+
+plt.savefig(path + dataset_name + "_L_U_Hist.pdf", dpi=600, bbox_inches="tight")

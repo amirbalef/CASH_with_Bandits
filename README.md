@@ -14,9 +14,9 @@ This method involves combining all model-specific hyperparameters into a single,
 - Perform HPO over the entire search space.  
 
 This approach, while comprehensive, can suffer from inefficiencies due to the high dimensionality of the combined search space.  
-![Combined Search Overview](assets/combined_search.png)  
+<img src="assets/combined_search.png" width="50%" />  
 *HPO results for combined search:*  
-![Combined Search HPO output](assets/HPO_combined_search_c.gif)  
+<img src="assets/HPO_combined_search_c.gif" width="50%" />
 
 ---
 
@@ -26,9 +26,9 @@ In this approach, HPO is conducted separately for each machine learning model:
 - However, managing excessive computation budgets across models is necessary.  
 
 To address this, we employ a **multi-armed bandit strategy** to allocate budgets efficiently.  
-![Decomposed CASH Overview](assets/decomposed_cash.png)  
+<img src="assets/decomposed_cash.png" width="50%" />  
 *HPO results for decomposed CASH without budget allocation:*  
-![HPO output per ML model](assets/HPO_c.gif)
+<img src="assets/HPO_c.gif" width="50%" />
 
 ---
 
