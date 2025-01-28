@@ -25,11 +25,16 @@ In this approach, HPO is conducted separately for each machine learning model:
 - The search space for each HPO is smaller, leading to more focused optimization.  
 - However, managing excessive computation budgets across models is necessary.  
 
-To address this, we employ a **multi-armed bandit strategy** to allocate budgets efficiently.  
-<img src="assets/decomposed_cash.png" width="50%" />  
-*HPO results for decomposed CASH without budget allocation:*  
-<img src="assets/HPO_c.gif" width="50%" />
 
+To address this, we employ a **multi-armed bandit strategy** to allocate budgets efficiently.  
+
+<center>  
+![Decomposed CASH Overview](assets/decomposed_cash.png){: width="50%" }  
+</center>  
+*HPO results for decomposed CASH without budget allocation:*  
+<center>
+  ![HPO output per ML model](assets/HPO_c.gif){: width="50%" }
+</center>
 ---
 
 By using MaxUCB, we strike a balance between model exploration and hyperparameter optimization, reducing computational overhead while maintaining performance.  
