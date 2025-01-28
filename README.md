@@ -22,6 +22,14 @@ This approach, while comprehensive, can suffer from inefficiencies due to the hi
   <img src="assets/HPO_combined_search_c.gif" width="50%" />
 </div>
 
+<div style="display: flex; justify-content: center;">
+  <img src="assets/combined_search.png" width="50%" />
+</div>  
+*HPO results for combined search:*  
+<div style="display: flex; justify-content: center;">
+  <img src="assets/HPO_combined_search_c.gif" width="50%" />
+</div>
+
 ---
 
 ### 2. **Decomposed Search with Bandits**  
@@ -39,6 +47,7 @@ To address this, we employ a **multi-armed bandit strategy** to allocate budgets
 <div style="text-align:center;">
   <img src="assets/HPO_c.gif" width="50%" />
 </div>
+
 
 ---
 
