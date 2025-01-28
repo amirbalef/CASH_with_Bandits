@@ -14,10 +14,13 @@ This method involves combining all model-specific hyperparameters into a single,
 - Perform HPO over the entire search space.  
 
 This approach, while comprehensive, can suffer from inefficiencies due to the high dimensionality of the combined search space.  
-<img src="assets/combined_search.png" width="50%" />  
+<div style="text-align:center;">
+  <img src="assets/combined_search.png" width="50%" />
+</div>  
 *HPO results for combined search:*  
-<img src="assets/HPO_combined_search_c.gif" width="50%" />
-
+<div style="text-align:center;">
+  <img src="assets/HPO_combined_search_c.gif" width="50%" />
+</div>
 ---
 
 ### 2. **Decomposed Search with Bandits**  
@@ -28,13 +31,13 @@ In this approach, HPO is conducted separately for each machine learning model:
 
 To address this, we employ a **multi-armed bandit strategy** to allocate budgets efficiently.  
 
-<center>  
-![Decomposed CASH Overview](assets/decomposed_cash.png){: width="50%" }  
-</center>  
+<div style="text-align:center;">
+  <img src="assets/decomposed_cash.png" width="50%" />
+</div>  
 *HPO results for decomposed CASH without budget allocation:*  
-<center>
-  ![HPO output per ML model](assets/HPO_c.gif){: width="50%" }
-</center>
+<div style="text-align:center;">
+  <img src="assets/HPO_c.gif" width="50%" />
+</div>
 ---
 
 By using MaxUCB, we strike a balance between model exploration and hyperparameter optimization, reducing computational overhead while maintaining performance.  
