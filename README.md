@@ -21,6 +21,7 @@ This approach, while comprehensive, can suffer from inefficiencies due to the hi
 <div style="text-align:center;">
   <img src="assets/HPO_combined_search_c.gif" width="50%" />
 </div>
+
 ---
 
 ### 2. **Decomposed Search with Bandits**  
@@ -38,13 +39,17 @@ To address this, we employ a **multi-armed bandit strategy** to allocate budgets
 <div style="text-align:center;">
   <img src="assets/HPO_c.gif" width="50%" />
 </div>
+
 ---
 
 By using MaxUCB, we strike a balance between model exploration and hyperparameter optimization, reducing computational overhead while maintaining performance.  
 <div style="text-align:center;">
   <img src="assets/MaxUCB.png" width="50%" />
 </div>
+
 ---
+
+
 ## **Project Structure**  
 The repository is organized as follows:
 
