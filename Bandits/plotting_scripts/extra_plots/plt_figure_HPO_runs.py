@@ -102,9 +102,7 @@ plt.gca().spines["left"].set_position(("data", -5))
 plt.gca().spines["right"].set_position(("data", 316))
 ax.spines["top"].set_bounds(-5, 316)
 ax.spines["bottom"].set_bounds(-5, 316)
-fig.savefig(
-    result_directory + "extra_plots/performance.pdf", dpi=600, bbox_inches="tight"
-)
+fig.savefig( "performance.pdf", dpi=600, bbox_inches="tight")
 plt.close()
 
 
@@ -190,8 +188,7 @@ plt.xlabel("Accuracy")
 # add legend to plot
 plt.legend(fontsize=14, loc="upper left")
 # plt.savefig("quantile-comparison.png", dpi = 600, bbox_inches = 'tight')
-plt.savefig(
-    result_directory + "extra_plots/distribution-comparison.pdf",
+plt.savefig("distribution-comparison.pdf",
     dpi=600,
     bbox_inches="tight",
 )

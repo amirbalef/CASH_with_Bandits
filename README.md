@@ -41,7 +41,10 @@ To address this, we employ a **multi-armed bandit strategy** to allocate budgets
 ---
 
 By using MaxUCB, we strike a balance between model exploration and hyperparameter optimization, reducing computational overhead while maintaining performance.  
-
+<div style="text-align:center;">
+  <img src="assets/MaxUCB.png" width="50%" />
+</div>
+---
 ## **Project Structure**  
 The repository is organized as follows:
 
