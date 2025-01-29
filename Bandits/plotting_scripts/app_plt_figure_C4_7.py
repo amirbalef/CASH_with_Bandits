@@ -8,7 +8,7 @@ from matplotlib.ticker import FormatStrFormatter
 
 ### run for each datasets
 dataset_names = ["TabRepo", "TabRepoRaw", "YaHPOGym", "Reshuffling"]
-dataset_name = dataset_names[0]
+dataset_name = dataset_names[2]
 
 
 dataset = pd.read_csv("../datasets/" + dataset_name + ".csv")
@@ -61,7 +61,7 @@ low_epsilon = 0.00
 
 epsilon = np.linspace(low_epsilon, high_epsilon, 1000)
 
-fig, axs = plt.subplots(3, number_of_arms, sharey=True)  # , sharey=True
+fig, axs = plt.subplots(3, number_of_arms)  # , sharey=True
 print(axs.shape)
 plt.subplots_adjust(left=0.0, right=1.0, top=0.9, bottom=0.1)
 plt.subplots_adjust(wspace=0.1, hspace= 0.3)
@@ -204,9 +204,9 @@ for i in range(number_of_arms):
     )
     # axes[0].set_title("Histogram of L")
     axs[1, i].set_xlabel("Values for L")
-    # axes[0].set_xticks(bins)  # Set ticks to bin edges
-    # axes[0].set_xticklabels(bins)  # Use bin edges as tick labels
     axs[1, i].set_xscale("log")
+    axs[1, i].set_xticks([0.1, 1, 10])  # Set ticks to bin edges
+    axs[1, i].set_xticklabels([0.1, 1, 10])  # Use bin edges as tick labels
 
     bins = np.logspace(-2, 3, num=20)  # Custom bins for list1
 
@@ -221,14 +221,17 @@ for i in range(number_of_arms):
 
     # axes[1].set_title("Histogram of U")
     axs[2, i].set_xlabel("Values for U")
-    # axes[1].set_xticks(bins)  # Set ticks to bin edges
-    # axes[1].set_xticklabels(bins)  # Use bin edges as tick labels
     axs[2, i].set_xscale("log")
+    axs[2, i].set_xticks([0.01, 1, 100])  # Set ticks to bin edges
+    axs[2, i].set_xticklabels([0.01, 1, 100])  # Use bin edges as tick labels
 
     if(i==0):
         axs[1, i].set_ylabel("Frequency")
         axs[2, i].set_ylabel("Frequency")
-
+    else:
+        axs[0, i].set_yticks([])
+        axs[1, i].set_yticks([])
+        axs[2, i].set_yticks([])
 
 handles, labels = axs[0,0].get_legend_handles_labels()
 leg = fig.legend(
