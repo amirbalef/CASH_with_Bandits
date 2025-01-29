@@ -49,7 +49,7 @@ ax2.set_xlabel(r"$\epsilon$")
 # Add epsilon ticks on the second axis corresponding to 1 - epsilon values on the first axis
 epsilon_ticks = np.linspace(0.1, 0.9, 5)
 ax2.set_xticks(1 - epsilon_ticks)
-ax2.set_xticklabels([f"{epsilon:.1f}" for epsilon in epsilon_ticks])
+ax2.set_xticklabels([f"${epsilon:.1f}$" for epsilon in epsilon_ticks])
 
 
 # Plot additional lines and points
@@ -135,7 +135,7 @@ ax1.legend(fontsize=18)
 
 # Show the plot
 plt.tight_layout()
-plt.savefig(path + "assumption_toy_example_2.pdf")
+plt.savefig(path + "assumption_toy_example_2.pdf", bbox_inches="tight")
 
 
 for epsilon in np.linspace(0.1, 0.9, 5):

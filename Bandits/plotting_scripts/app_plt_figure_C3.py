@@ -39,7 +39,7 @@ for loc, scale in zip(means, variance):
     for i in range(1000):
         a, b = (a_trunc - loc) / scale, (b_trunc - loc) / scale
         r = truncnorm.rvs(a, b, loc=loc, scale=scale, size=1000, random_state=i)
-        X = np.linspace(np.min(r), np.max(r), 100)
+        X = np.linspace(np.quantile(r, q=0.01), np.quantile(r, q=0.99), 100)
         A1 = [G(X[-1] - x, r) / x for x in X]
         L.append(min(A1))
         U.append(max(A1))
@@ -47,7 +47,6 @@ for loc, scale in zip(means, variance):
     a, b = (a_trunc - loc) / scale, (b_trunc - loc) / scale
     data.append(truncnorm.rvs(a, b, loc=loc, scale=scale, size=10000, random_state=0))
     labels.append(rf"$\mu={loc:.2f}$, $\sigma^2={scale:.1f}$")
-
     print(
         "mean=",
         loc,
@@ -68,8 +67,8 @@ for i in range(len(means)):
         linewidth = 3,
     )
 
-plt.ylabel("G(x)")
-plt.xlabel("x")
+plt.ylabel("$G(x)$")
+plt.xlabel("$x$")
 # plt.title("Scatter plot of L vs. U for different (mean, variance) pairs")
 plt.legend(fontsize=12)
 plt.tight_layout()
