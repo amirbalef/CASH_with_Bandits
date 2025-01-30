@@ -4,8 +4,13 @@ import pandas as pd
 import exp_utils
 import matplotlib.pyplot as plt
 import pylab
+import numpy as np
+import analysis_utils
+import algorithms_data
 
-dataset_names = ["TabRepo", "TabRepoRaw", "YaHPOGym", "Reshuffling"]
+
+#dataset_names = ["TabRepo", "TabRepoRaw", "YaHPOGym", "Reshuffling"]
+dataset_names = ["TabRepoRaw", "YaHPOGym"]
 
 
 def get_plot(order,  dataset_name):
@@ -22,52 +27,25 @@ def get_plot(order,  dataset_name):
     combined_search_algorithms = dataset[dataset["arm_index"] < 0]["optimizer"].unique()
 
     policy_algorithms = {}
-    policy_algorithms["MaxUCB"] = 1
-    policy_algorithms["Q_BayesUCB"] = 1
-    policy_algorithms["ER_UCB_S"] = 1
-    policy_algorithms["Rising_Bandit"] = 1
-    #policy_algorithms["QoMax_ETC"] = 1
-    policy_algorithms["QoMax_SDA"] = 1
-    #policy_algorithms["ER_UCB_N"] = 1
-    policy_algorithms["Max_Median"] = 1
-    #policy_algorithms["Exp3_OG"] = 1
-    # policy_algorithms["TS_Poisson"] = 1
-    # policy_algorithms["TS_Gaussian"] = 1
-    policy_algorithms["UCB"] = 1
-    # policy_algorithms["MaxSearch_Gaussian"] = 1
-    # policy_algorithms["MaxSearch_SubGaussian"] = 1
-    #policy_algorithms["Threshold_Ascent"] = 1
-    #policy_algorithms["Successive_Halving"] = 1
-    #policy_algorithms["Random"] = 1
-    for algorithm in reversed(combined_search_algorithms):
-        if(algorithm !="SMAC_NoInit"):
-            policy_algorithms[algorithm] = 1
-    policy_algorithms["Oracle_Arm"] = 1
+    policy_algorithms["MaxUCB_0.5"] = 1
+    alphas = np.arange(0.0, 1.0, 0.1)
+    alphas = np.round(alphas, 2)
+    for item in alphas:
+        policy_algorithms["MaxUCB_" + str(item)] = 1
 
     result_directory = "../results/"
     all_result = exp_utils.fetch_results(policy_algorithms, result_directory, dataset_name)
 
     from cycler import cycler
-    colors = plotting_utils.CB_color_cycle[:7]#['red', 'orange', 'blue', 'green', 'cyan', 'brown', 'olive'] #, 'purple ']
-    all_cyclers =  cycler(color=colors) * cycler(linestyle=["-"])  #,"--"
+    all_cyclers = cycler(color=[plotting_utils.CB_color_cycle[0]]) * cycler(linestyle=["-"])  # ,"--"
 
-    if dataset_name != "Reshuffling":
-        colorcycler = cycler(color=['black'])
-        lines = ["-",":"]
-        if dataset_name == "TabRepo":
-            lines = [":"]
-        if("SMAC_NoInit" in policy_algorithms):
-            lines = ["-","--",":"]
-        linecycler = cycler(linestyle=lines)
-        all_cyclers = all_cyclers.concat(colorcycler* linecycler)
+    colors = [plt.cm.Reds(i) for i in range(50, 250, 2*200//len(alphas)) ]
+    all_cyclers =  all_cyclers.concat(cycler(color=colors[:len(alphas)//4 ]) * cycler(linestyle=["-", "--"]) ) # ,"--"
+    all_cyclers =  all_cyclers.concat(cycler(color=[colors[len(alphas)//4]]) * cycler(linestyle=["-"]) )
+    all_cyclers =  all_cyclers.concat(cycler(color=colors[len(alphas)//4+1:]) * cycler(linestyle=["-", "--"]) ) 
 
-    if "Oracle_Arm" in policy_algorithms:
-        colorcycler = cycler(color=[ "grey"])
-        lines = ["-"]
-        linecycler = cycler(linestyle=lines)
-        all_cyclers = all_cyclers.concat(colorcycler * linecycler)
 
-    path = result_directory + "plots_for_paper/fig_rankings/" 
+    path = result_directory + "plots_for_paper/fig_ablation/" 
     if not os.path.exists(path):
             os.makedirs(path) 
 
@@ -86,7 +64,7 @@ def get_plot(order,  dataset_name):
     data["legend"] = False
     data["tilte"] = False
     data["ylabel"] = None
-    if(order==0):
+    if (order == 0 or order == 2):
         data["ylabel"] = "Ranking"
 
     data["set_ylim"] = None
@@ -104,104 +82,6 @@ def get_plot(order,  dataset_name):
     data["saving_name"] = "ranking"
     data["plot_confidence_type"] = "mean_std"
     plotting_utils.plot_averaged_on_datasets(data)
-
-
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import analysis_utils
-import algorithms_data
-
-import matplotlib.ticker as plticker
-
-
-def plot_averaged_on_datasets(data):
-    linewidth = 3
-    if "linewidth" in data:
-        linewidth = data["linewidth"]
-
-    if data["plot_type"] == "Ranking":
-        mean, std = analysis_utils.get_ranks_per_instance_MC(
-            data["all_result"],
-            data["horizon_time"],
-            data["number_of_arms"],
-            data["instances"],
-            data["number_of_trails"],
-            num_samples=100,
-        )
-    else:
-        print("Only for ranking!")
-        exit()
-    index = np.arange(data["horizon_time"])
-    # setting font sizeto 30
-    plt.rcParams.update({"font.size": 26})
-    if "fig_size" in data.keys():
-        fig, ax = plt.subplots(figsize=data["fig_size"])
-    else:
-        fig, ax = plt.subplots(figsize=(8, 6))
-    ax.set_prop_cycle(data["cyclers"])
-
-    for i, item in enumerate(data["all_result"].keys()):
-        zorder = None
-        if i == 0:
-            zorder = 100
-        ax.plot(
-            index,
-            mean[i],
-            label=algorithms_data.printing_name_dict[item],
-            linewidth=linewidth,
-            zorder=zorder,
-        )  # , marker=i,markevery=10)
-        ax.fill_between(index, mean[i] - std[i], mean[i] + std[i], alpha=0.3)
-
-    ax.set(xlabel="Iteration", ylabel=data["ylabel"])
-    # if data["plot_type"] == "Normalized Error":
-    #     ax.ticklabel_format(style="plain")
-    #     ax.set_yscale("log")
-    #     ax.yaxis.set_minor_formatter(plticker.NullFormatter())
-    #     ax.yaxis.set_ticks(ax.get_yticks())
-    #     ax.set_yticklabels([str(x) for x in ax.get_yticks()])
-    #     ax.set_ylim(data["set_ylim"])
-
-    if data["legend"]=="inside":  # dataset_name != "TabRepo":
-        loc = "center right"
-        if "fig_size" in data:
-            bbox_to_anchor = (0.65 * 8 / data["fig_size"][0], 0.5, 1, 0.1)
-        else:
-            bbox_to_anchor = (0.65, 0.5, 1, 0.1)
-        ax.legend(
-            loc=loc,
-            ncol=1,
-            fontsize=22,
-            bbox_to_anchor=bbox_to_anchor,
-            handletextpad=0.15,
-            handlelength=1.5,
-            frameon=False,
-        )
-    if data["tilte"]:
-        plt.title(algorithms_data.printing_name_dict[data["dataset_name"]])
-    # plt.savefig(data["saving_path"] +"/"+data["dataset_name"]+"_" + data["saving_name"] +".png", dpi=600, bbox_inches='tight')
-    # plt.tight_layout()
-    plt.savefig(
-        data["saving_path"]
-        + "/"
-        + data["dataset_name"]
-        + "_"
-        + data["saving_name"]
-        + ".pdf",
-        dpi=600,
-        bbox_inches="tight",
-    )
-    plt.close() 
-    if data["legend"] == "seperate":
-        figlegend = pylab.figure(figsize=(3, 8))
-        pylab.figlegend(*ax.get_legend_handles_labels(), loc="upper left")
-        figlegend.savefig(
-            data["saving_path"] + "/" + "ranking_legend.pdf",
-            dpi=600,
-            bbox_inches="tight",
-        )
-
 
 for i, dataset_name in enumerate( dataset_names):
     get_plot(i, dataset_name)

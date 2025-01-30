@@ -8,7 +8,7 @@ from matplotlib.ticker import FormatStrFormatter
 
 ### run for each datasets
 dataset_names = ["TabRepo", "TabRepoRaw", "YaHPOGym", "Reshuffling"]
-dataset_name = dataset_names[2]
+dataset_name = dataset_names[1]
 
 
 dataset = pd.read_csv("../datasets/" + dataset_name + ".csv")
@@ -196,7 +196,7 @@ for i in range(number_of_arms):
     bins = np.logspace(-2, 2, num=20)  # Custom bins for list1
     # Plot histogram for list1
     axs[1, i].hist(
-        np.nanmin(L, axis=0),
+        np.nanmin(L, axis=1),
         bins=bins,
         color=desaturate("#377eb8", 0.75),
         alpha=0.8,
@@ -212,7 +212,7 @@ for i in range(number_of_arms):
 
     # Plot histogram for list2
     axs[2, i].hist(
-        np.nanmax(L, axis=0),
+        np.nanmax(L, axis=1),
         bins=bins,
         color=desaturate("#e41a1c", 0.65),
         alpha=0.8,

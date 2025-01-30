@@ -21,7 +21,7 @@ This approach, while comprehensive, can suffer from inefficiencies due to the hi
 
 **HPO results for combined search:** 
 <p align="center">
-  <img src="assets/HPO_combined_search_c.gif" width="80%" />
+  <img src="assets/HPO_combined_search_c.gif" width="60%" />
 </p>
 
 ### 2. **Decomposed Search with Bandits**  
@@ -38,7 +38,7 @@ To address this, we employ a **multi-armed bandit strategy** to allocate budgets
 
 **HPO results for decomposed CASH without budget allocation (Round-robin):** 
 <p align="center">
-  <img src="assets/HPO_c.gif" width="80%" />
+  <img src="assets/HPO_c.gif" width="60%" />
 </p>
 
 
