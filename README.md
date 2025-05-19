@@ -44,7 +44,7 @@ In this approach, HPO is conducted separately for each machine learning model:
 - However, managing excessive computation budgets across models is necessary.  To address this, we employ a **multi-armed bandit strategy** to allocate budgets efficiently.  
 
 <p align="center">
-  <img src="assets/decomposed_cash.png" width="80%" />
+  <img src="assets/decomposed_cash_bandit.png" width="80%" />
 </p>  
 
 Using **MaxUCB**, we balance model exploration and hyperparameter optimization, reducing computational overhead while maintaining performance.  
