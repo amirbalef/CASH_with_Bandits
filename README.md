@@ -6,6 +6,7 @@ problem in Automated Machine Learning
 The Combined Algorithm Selection and Hyperparameter optimization (CASH) is a challenging resource allocation problem in the field of AutoML. We propose MaxUCB, a max $k$-armed bandit method to trade off exploring different model classes and conducting hyperparameter optimization (HPO). MaxUCB is specifically designed for the light-tailed and bounded reward distributions arising in this setting and, thus, provides an efficient alternative compared to classic max $k$-armed bandit methods assuming heavy-tailed reward distributions. We theoretically and empirically evaluate our method on four standard AutoML benchmarks demonstrating superior performance over prior approaches.
 
 ## Overview
+To solve CASH problem two approaches exist  **Combined Search**   and **Decomposed Search**.
 
 ### 1. **Combined Search**  
 This method involves combining all model-specific hyperparameters into a single, unified search space:  
@@ -24,16 +25,13 @@ This approach, while comprehensive, can suffer from inefficiencies due to the hi
   <img src="assets/HPO_combined_search_c.gif" width="60%" />
 </p>
 
-### 2. **Decomposed Search with Bandits**  
+
+
+### 2. **Decomposed Search**  
 In this approach, HPO is conducted separately for each machine learning model:  
 - The search space for each HPO is smaller, leading to more focused optimization.  
-- However, managing excessive computation budgets across models is necessary.  
-
-
-To address this, we employ a **multi-armed bandit strategy** to allocate budgets efficiently.  
-
 <p align="center">
-  <img src="assets/decomposed_cash.png" width="80%" />
+  <img src="assets/naive_decomposed_cash.png" width="80%" />
 </p>  
 
 **HPO results for decomposed CASH without budget allocation (Round-robin):** 
@@ -41,6 +39,13 @@ To address this, we employ a **multi-armed bandit strategy** to allocate budgets
   <img src="assets/HPO_c.gif" width="60%" />
 </p>
 
+
+
+- However, managing excessive computation budgets across models is necessary.  To address this, we employ a **multi-armed bandit strategy** to allocate budgets efficiently.  
+
+<p align="center">
+  <img src="assets/decomposed_cash.png" width="80%" />
+</p>  
 
 Using **MaxUCB**, we balance model exploration and hyperparameter optimization, reducing computational overhead while maintaining performance.  
 

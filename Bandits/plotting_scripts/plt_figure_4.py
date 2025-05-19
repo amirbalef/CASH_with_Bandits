@@ -12,8 +12,8 @@ plt.rcParams.update({"font.size": 26})
 
 ### run for each datasets
 dataset_name = "TabRepoRaw"
-dataset_name = "YaHPOGym"
-dataset_name = "Synth"
+#dataset_name = "YaHPOGym"
+#dataset_name = "Synth"
 
 path = "../results/plots_for_paper/fig_assumption/"
 if not os.path.exists(path):
@@ -459,8 +459,9 @@ if dataset_name == "Synth":
 
 
 # Add labels, legend, and grid
-plt.xlabel("Reward", labelpad=0)
-plt.ylabel("Survival function")
+#plt.xlabel("Reward", labelpad=0)
+plt.ylabel(r"$P(\mathrm{reward } \geq x)$")
+plt.xlabel("x", labelpad=0)
 
 # plt.title("Comparison of $G_1(x)$ and $G_2(x)$", fontsize=18)
 

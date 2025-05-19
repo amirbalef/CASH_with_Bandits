@@ -27,7 +27,9 @@ classes = dataset["classifier"].unique()
 instance_num = instances.index("ilpd")
 
 policy_algorithms = {}
+policy_algorithms["MaxUCB"] = 1
 policy_algorithms["SMAC"] = 1
+policy_algorithms_labels = ["MaxUCB", "combined search"]
 result_directory = "../results/"
 all_result = exp_utils.fetch_results(policy_algorithms, result_directory, dataset_name)
 
@@ -38,7 +40,7 @@ if not os.path.exists(path):
 def improve_legend(ax=None):
     if ax is None:
         ax = plt.gca()
-    adjustment = [7, -8, -5, 0, 7, 0, -7, 7]
+    adjustment = [0, 6, -8, -5, 0, 7, 0, -7, 7]
     for i, line in enumerate(ax.lines):
         print(i, line.get_label())
         data_x, data_y = line.get_data()
@@ -59,15 +61,16 @@ def improve_legend(ax=None):
 
 plt.rcParams.update({"font.size": 30})
 
-colors = ["black"]
+colors = ["#377eb8", "black"]
 all_cyclers = cycler(color=colors) * cycler(
     linestyle=["-"]
 )
 colors = plotting_utils.CB_color_cycle
+colors[0] = "#1A85FF" 
 myorder = [0, 1, 6, 3, 4, 5, 2, 7]
 colors = [colors[i] for i in myorder]
 colorcycler = cycler(color=colors)
-lines = ["-"]
+lines = ["--"]
 linecycler = cycler(linestyle=lines)
 all_cyclers = all_cyclers.concat(colorcycler * linecycler)
 
@@ -75,6 +78,7 @@ all_cyclers = all_cyclers.concat(colorcycler * linecycler)
 fig, ax = plt.subplots(figsize=(6.5, 8))
 ax.set_prop_cycle(all_cyclers)
 for j, item in enumerate(all_result):
+    labels= []
     ax.plot(
         np.mean(
             np.maximum.accumulate(
@@ -82,7 +86,7 @@ for j, item in enumerate(all_result):
             ),
             axis=0,
         ),
-        label="combined search",  # item,
+        label=policy_algorithms_labels[j],  # item,
         linewidth=4.0,
     )
 for arm in range(number_of_arms):
@@ -97,13 +101,16 @@ for arm in range(number_of_arms):
         linewidth=4.0,
     ) 
 
-ax.set(xlabel="HPO iteration", ylabel="Maximum observed accuracy")
 
 improve_legend(ax)
 plt.gca().spines["left"].set_position(("data", -5))
 plt.gca().spines["right"].set_position(("data", 320))
 ax.spines["top"].set_bounds(-5, 320)
 ax.spines["bottom"].set_bounds(-5,320)
+
+ax.set(ylabel="Maximum observed accuracy")
+ax.set_xlabel("HPO iteration", loc="right")
+
 fig.savefig(path + "HPO_runs_performance.pdf", dpi=600, bbox_inches="tight")
 plt.close()
 

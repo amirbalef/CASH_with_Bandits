@@ -250,10 +250,10 @@ plt.savefig(path + dataset_name + "_L_U_S.pdf", dpi=600, bbox_inches="tight")
 print(W_values_U)
 
 # Create a figure with two subplots
-fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharey=True)
+fig, axes = plt.subplots(1, 2, figsize=(8, 6), sharey=True)
 plt.subplots_adjust(wspace=0)
 
-bins = np.logspace(-1.1, 1.5, num=20)  # Custom bins for list1
+bins = np.logspace(-0.5, 1.5, num=20)  # Custom bins for list1
 # Plot histogram for list1
 axes[0].hist(values_L, bins=bins, color="tab:blue", alpha=0.3, edgecolor="tab:blue", label = "Optimal arm")
 axes[0].hist(
@@ -291,15 +291,15 @@ axes[1].set_xlabel("Values for U")
 # axes[1].set_xticks(bins)  # Set ticks to bin edges
 # axes[1].set_xticklabels(bins)  # Use bin edges as tick labels
 axes[1].set_xscale("log")
-#axes[1].legend(loc="upper left", fontsize=16)
+axes[1].legend(loc="upper right", fontsize=20)
 
 plt.savefig(path + dataset_name + "_L_U_Hist.pdf", dpi=600, bbox_inches="tight")
 
-figlegend = pylab.figure(figsize=(8, 2))
-pylab.figlegend(*axes[0].get_legend_handles_labels(), loc="upper left", ncol=2)
-figlegend.savefig(
-    path + "legend.pdf",
-    dpi=600,
-    bbox_inches="tight",
-)
+# figlegend = pylab.figure(figsize=(8, 2))
+# pylab.figlegend(*axes[0].get_legend_handles_labels(), loc="upper left", ncol=2)
+# figlegend.savefig(
+#     path + "legend.pdf",
+#     dpi=600,
+#     bbox_inches="tight",
+# )
 

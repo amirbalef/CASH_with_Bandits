@@ -143,8 +143,10 @@ for arm in range(0, number_of_arms):
         label = "Optimal arm"
     if(dataset_name == "TabRepoRaw"):
         if arm == number_of_arms - 2:
-            ax.text(2.45, 0.38, " (only " + dataset_name + ")", transform=ax.transData, fontsize = 20, zorder =99)
+            #ax.text(2.45, 0.38, " (only " + dataset_name + ")", transform=ax.transData, fontsize = 20, zorder =99)
+
             #label = Ordinal_numbers[arm] + " arm (only " + dataset_name +")"
+            label = Ordinal_numbers[arm] + " arm (only " + dataset_name + ")"
 
     for n in range(number_of_stationary_pieces):
         list_of_cdfs = list_of_cdfs_per_seqments[n]
@@ -169,15 +171,15 @@ for arm in range(0, number_of_arms):
     )
 
 # axins.set_xlim(0.95, 1.05)
-plt.ylabel("Survival function")
-plt.xlabel("Reward")
+plt.ylabel(r"$P(\mathrm{reward } \geq x)$")
+plt.xlabel("x")
 
 # plt.title(algorithms_data.algoirthm_names_dict[dataset_name])
 # plt.legend()
 # Put a legend below current axis
 if dataset_name == "TabRepoRaw":
     plt.legend(
-        loc="center left", bbox_to_anchor=(1, 0.5), ncol=(number_of_arms + 1) // 2
+        loc="center left", bbox_to_anchor=(1, 0.5), ncol=(number_of_arms)
     )
 
 # show the graph
@@ -299,8 +301,8 @@ if 0:  # dataset_name == "TabRepo_gen":
 
 
 # axins.set_xlim(0.95, 1.05)
-plt.ylabel("Survival function")
-plt.xlabel("Reward")
+plt.ylabel(r"$P(\mathrm{reward } \geq x)$", fontsize =30)
+plt.xlabel("x", fontsize=30)
 # plt.title(algorithms_data.algoirthm_names_dict[dataset_name] )
 # plt.legend()
 
